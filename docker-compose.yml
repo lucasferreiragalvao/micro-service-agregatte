@@ -7,10 +7,8 @@ services:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: 1234
     ports:
-      - 15672:15672
-    expose:
-      - 15672
-      - 5672
+      - "5672:5672"
+      - "15672:15672"
   mongodb:
     image: mongo
     restart: always
@@ -18,6 +16,6 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: 1234
     ports:
-      - 27021:27017
+      - "27021:27017"
     volumes:
       - ./mongo-volume:/data/db

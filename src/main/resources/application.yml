@@ -1,0 +1,14 @@
+application:
+  rabbitmq:
+    queue:
+      name: ${APPLICATION_RABBITMQ_QUEUE_NAME:microservice_car_rental_queue}
+    exchange:
+      name: ${APPLICATION_RABBITMQ_EXCHANGE_NAME:microservice_car_rental_exchange}
+    routing:
+      key: ${APPLICATION_RABBITMQ_ROUTING_KEY:microservice_car_rental_queue_key}
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: 1234
