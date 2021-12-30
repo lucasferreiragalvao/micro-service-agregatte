@@ -1,3 +1,5 @@
+server:
+  port: 8081
 application:
   rabbitmq:
     queue:
@@ -7,8 +9,15 @@ application:
     routing:
       key: ${APPLICATION_RABBITMQ_ROUTING_KEY:microservice_car_rental_queue_key}
 spring:
+  data:
+    mongodb:
+      uri: mongodb://root:1234@localhost:27021/reserves-api
   rabbitmq:
     host: localhost
     port: 5672
     username: guest
     password: 1234
+
+integration:
+  car:
+    url: http://localhost:8080
