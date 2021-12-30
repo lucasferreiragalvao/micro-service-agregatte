@@ -1,0 +1,43 @@
+package com.unifacef.work.groupone.microservicereserve.gateways.outputs.http.resources;
+
+import com.unifacef.work.groupone.microservicereserve.domains.Brand;
+import com.unifacef.work.groupone.microservicereserve.domains.Car;
+import com.unifacef.work.groupone.microservicereserve.domains.Classification;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class CarResource {
+
+    private String code;
+    private int year;
+    private String color;
+    private String classification;
+    private BrandResource brand;
+    private String model;
+    private String name;
+    private String board;
+    private Double tankSize;
+    private Boolean isActive;
+    private String note;
+
+    public Car toDomain(){
+        return Car.builder()
+                .code(this.code)
+                .year(this.year)
+                .color(this.color)
+                .classification(Classification.valueOf(this.classification.toString()))
+                .brand(Brand.builder().imported(this.brand.getImported()).name(this.brand.getName()).build())
+                .model(this.model)
+                .name(this.name)
+                .board(this.board)
+                .tankSize(this.tankSize)
+                .isActive(this.isActive)
+                .note(this.note)
+                .build();
+    }
+
+}
