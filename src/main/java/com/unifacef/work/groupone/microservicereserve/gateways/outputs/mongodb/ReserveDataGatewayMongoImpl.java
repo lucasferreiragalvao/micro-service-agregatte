@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -22,5 +23,10 @@ public class ReserveDataGatewayMongoImpl implements ReserveDataGateway {
             reserve.setCreatedDate(LocalDateTime.now());
         }
         return reserveRepository.save(new ReserveDocument(reserve)).toDomain();
+    }
+
+    @Override
+    public Optional<Reserve> findByCode(String code) {
+        return reserveRepository.findById(code).map(ReserveDocument::toDomain);
     }
 }

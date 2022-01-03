@@ -22,6 +22,7 @@ public class CreateReserve {
     public Reserve execute(final Reserve reserve){
         Car car = carGateway.findByCode(reserve.getCar().getCode()).toDomain();
         validate(car);
+        reserve.setStartOdomenter(car.getOdomenter());
         reserve.setCar(car);
         log.info("Create reserve");
         Reserve saved = reserveDataGateway.save(reserve);

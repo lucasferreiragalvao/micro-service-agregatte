@@ -3,11 +3,11 @@ server:
 application:
   rabbitmq:
     queue:
-      name: ${APPLICATION_RABBITMQ_QUEUE_NAME:microservice_car_rental_queue}
+      name: ${APPLICATION_RABBITMQ_QUEUE_NAME:microservice_car}
     exchange:
-      name: ${APPLICATION_RABBITMQ_EXCHANGE_NAME:microservice_car_rental_exchange}
+      name: ${APPLICATION_RABBITMQ_EXCHANGE_NAME:microservice_car_reserve_exchange}
     routing:
-      key: ${APPLICATION_RABBITMQ_ROUTING_KEY:microservice_car_rental_queue_key}
+      key: ${APPLICATION_RABBITMQ_ROUTING_KEY:microservice_car_queue_key}
 spring:
   data:
     mongodb:

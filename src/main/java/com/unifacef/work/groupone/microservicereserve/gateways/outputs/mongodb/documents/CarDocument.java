@@ -17,6 +17,7 @@ public class CarDocument {
     private String name;
     private String board;
     private Double tankSize;
+    private Long odomenter;
     private Boolean isActive;
     private String note;
 
@@ -30,6 +31,7 @@ public class CarDocument {
         this.name = car.getName();
         this.board = car.getBoard();
         this.tankSize = car.getTankSize();
+        this.odomenter = car.getOdomenter();
         this.isActive = car.getIsActive();
         this.note = car.getNote();
     }
