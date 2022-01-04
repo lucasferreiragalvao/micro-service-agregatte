@@ -1,6 +1,7 @@
 package com.unifacef.work.groupone.microservicereserve.usecases;
 
 import com.unifacef.work.groupone.microservicereserve.domains.Reserve;
+import com.unifacef.work.groupone.microservicereserve.domains.Status;
 import com.unifacef.work.groupone.microservicereserve.exceptions.MessageKey;
 import com.unifacef.work.groupone.microservicereserve.exceptions.NotFoundException;
 import com.unifacef.work.groupone.microservicereserve.gateways.outputs.QueuePublishMessageGateway;
@@ -23,7 +24,7 @@ public class PatchStatusFinishedReserve {
         log.info("Finished reserve : {}",reserve.getCode());
         Reserve oldReserve = reserveDataGateway.findByCode(reserve.getCode())
                 .orElseThrow(() -> new NotFoundException(messageUtils.getMessage(MessageKey.RESERVE_NOT_FOUND,reserve.getCode())));
-
+        validate(oldReserve);
         oldReserve.setStatus(reserve.getStatus());
         if(reserve.getFinalOdomenter() != null){
             validateFinalOdometerGreaterThanStartOdometer(reserve.getFinalOdomenter(),oldReserve.getStartOdomenter());
@@ -34,6 +35,15 @@ public class PatchStatusFinishedReserve {
                 ConvertMessage.convertMessageCar(reserveSaved.getCar().getCode(),reserveSaved.getFinalOdomenter())
         );
         return reserveSaved;
+    }
+    private void validate(Reserve reserve){
+        validStatus(reserve);
+    }
+
+    private void validStatus(Reserve reserve){
+        if(reserve.getStatus().equals(Status.FINISHED)){
+            throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.RESERVE_IS_ALREADY_FINISHED,reserve.getCode()));
+        }
     }
 
     private void validateFinalOdometerGreaterThanStartOdometer(Long finalOdomenter,Long startOdomenter){
