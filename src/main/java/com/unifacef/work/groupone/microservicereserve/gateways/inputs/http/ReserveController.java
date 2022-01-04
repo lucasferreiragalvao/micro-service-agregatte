@@ -5,6 +5,7 @@ import com.unifacef.work.groupone.microservicereserve.gateways.inputs.http.reque
 import com.unifacef.work.groupone.microservicereserve.gateways.inputs.http.responses.ReserveResponse;
 import com.unifacef.work.groupone.microservicereserve.usecases.CreateReserve;
 import com.unifacef.work.groupone.microservicereserve.usecases.PatchStatusFinishedReserve;
+import com.unifacef.work.groupone.microservicereserve.usecases.PatchStatusInProgressReserve;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -23,6 +24,7 @@ public class ReserveController {
 
     private final CreateReserve createReserve;
     private final PatchStatusFinishedReserve patchStatusFinishedReserve;
+    private final PatchStatusInProgressReserve patchStatusInProgressReserve;
 
     @PostMapping
     public ReserveResponse create(@RequestBody @Validated final CreateReserveRequest request){
@@ -30,7 +32,13 @@ public class ReserveController {
     }
 
     @PatchMapping(path = "/{code}/status/finished")
-    public ReserveResponse patch(@PathVariable final String code, @RequestBody @Validated final PatchFinishedReserveRequest request){
+    public ReserveResponse patchStatusFinished(@PathVariable final String code, @RequestBody @Validated final PatchFinishedReserveRequest request){
         return new ReserveResponse(patchStatusFinishedReserve.execute(request.toDomain(code)));
     }
+
+    @PatchMapping(path = "/{code}/status/in-progress")
+    public ReserveResponse patchStatusInProgress(@PathVariable final String code){
+        return new ReserveResponse(patchStatusInProgressReserve.execute(code));
+    }
+
 }

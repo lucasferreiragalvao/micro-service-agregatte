@@ -2,6 +2,7 @@ package com.unifacef.work.groupone.microservicereserve.usecases;
 
 import com.unifacef.work.groupone.microservicereserve.domains.Car;
 import com.unifacef.work.groupone.microservicereserve.domains.Reserve;
+import com.unifacef.work.groupone.microservicereserve.domains.Status;
 import com.unifacef.work.groupone.microservicereserve.exceptions.MessageKey;
 import com.unifacef.work.groupone.microservicereserve.gateways.outputs.CarGateway;
 import com.unifacef.work.groupone.microservicereserve.gateways.outputs.ReserveDataGateway;
@@ -22,8 +23,9 @@ public class CreateReserve {
     public Reserve execute(final Reserve reserve){
         Car car = carGateway.findByCode(reserve.getCar().getCode()).toDomain();
         validate(car);
-        reserve.setStartOdomenter(car.getOdomenter());
+        car.setOdomenter(null);
         reserve.setCar(car);
+        reserve.setStatus(Status.PENDING);
         log.info("Create reserve");
         Reserve saved = reserveDataGateway.save(reserve);
         return saved;

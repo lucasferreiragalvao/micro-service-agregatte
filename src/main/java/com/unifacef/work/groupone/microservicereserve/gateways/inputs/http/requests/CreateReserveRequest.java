@@ -14,7 +14,6 @@ public class CreateReserveRequest extends ReserveRequest{
                 .car(Car.builder().code(super.getCodeCar()).build())
                 .startDate(super.getStartDate())
                 .finalDate(super.getFinalDate())
-                .status(super.getStatus())
                 .build();
     }
 }

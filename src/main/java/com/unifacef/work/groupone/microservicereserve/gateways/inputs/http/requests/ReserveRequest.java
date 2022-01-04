@@ -26,7 +26,4 @@ public abstract class ReserveRequest implements Serializable {
     @ApiModelProperty(position = 4)
     private LocalDateTime finalDate;
 
-    @ApiModelProperty(position = 5)
-    private Status status;
-
 }
