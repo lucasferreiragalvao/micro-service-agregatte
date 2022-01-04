@@ -3,8 +3,6 @@ package com.unifacef.work.groupone.microservicereserve.domains;
 import lombok.Builder;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 @Builder
 public class Car {
@@ -17,6 +15,7 @@ public class Car {
     private String name;
     private String board;
     private Double tankSize;
+    private Long odomenter;
     private Boolean isActive;
     private String note;
 }

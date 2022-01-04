@@ -8,7 +8,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -20,6 +19,8 @@ public class ReserveDocument {
     private CarDocument car;
     private LocalDateTime startDate;
     private LocalDateTime finalDate;
+    private Long startOdomenter;
+    private Long finalOdomenter;
     private Status status;
     private LocalDateTime createdAt;
     @LastModifiedDate
@@ -32,6 +33,8 @@ public class ReserveDocument {
         this.startDate = reserve.getStartDate();
         this.finalDate = reserve.getFinalDate();
         this.status = reserve.getStatus();
+        this.startOdomenter = reserve.getStartOdomenter();
+        this.finalOdomenter = reserve.getFinalOdomenter();
         this.createdAt = reserve.getCreatedDate();
         this.lastModifiedDate = reserve.getLastModifiedDate();
     }
@@ -52,9 +55,11 @@ public class ReserveDocument {
                         .isActive(car.getIsActive())
                         .note(car.getNote())
                         .build())
-                .startDate(startDate)
-                .finalDate(finalDate)
-                .status(status)
+                .startDate(this.startDate)
+                .finalDate(this.finalDate)
+                .startOdomenter(this.startOdomenter)
+                .finalOdomenter(this.finalOdomenter)
+                .status(this.status)
                 .build();
     }
 }

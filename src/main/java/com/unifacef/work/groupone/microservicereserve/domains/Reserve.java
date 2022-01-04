@@ -14,6 +14,8 @@ public class Reserve {
     private LocalDateTime startDate;
     private LocalDateTime finalDate;
     private Status status;
+    private Long startOdomenter;
+    private Long finalOdomenter;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
 }

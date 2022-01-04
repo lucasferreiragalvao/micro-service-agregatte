@@ -21,6 +21,7 @@ public class CarResource {
     private String name;
     private String board;
     private Double tankSize;
+    private Long odomenter;
     private Boolean isActive;
     private String note;
 
@@ -35,6 +36,7 @@ public class CarResource {
                 .name(this.name)
                 .board(this.board)
                 .tankSize(this.tankSize)
+                .odomenter(this.odomenter)
                 .isActive(this.isActive)
                 .note(this.note)
                 .build();

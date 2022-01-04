@@ -2,7 +2,7 @@ version: '2'
 services:
   rabbitmq:
     image: rabbitmq:3-management
-    container_name: rabbitmq-microservice-car-rental
+    container_name: rabbitmq-microservice-car-reserve
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: 1234
