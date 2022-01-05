@@ -21,3 +21,5 @@ spring:
 integration:
   car:
     url: http://localhost:8080
+  customer:
+    url: http://localhost:8082
