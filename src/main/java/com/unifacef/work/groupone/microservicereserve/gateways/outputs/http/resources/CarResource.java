@@ -15,7 +15,7 @@ public class CarResource {
     private String code;
     private int year;
     private String color;
-    private String classification;
+    private ClassificationResource classification;
     private BrandResource brand;
     private String model;
     private String name;
@@ -30,8 +30,17 @@ public class CarResource {
                 .code(this.code)
                 .year(this.year)
                 .color(this.color)
-                .classification(Classification.valueOf(this.classification.toString()))
-                .brand(Brand.builder().imported(this.brand.getImported()).name(this.brand.getName()).build())
+                .classification(
+                        Classification.builder()
+                                .code(this.getClassification().getCode())
+                                .name(this.getClassification().getName())
+                                .price(this.getClassification().getPrice())
+                                .build())
+                .brand(
+                        Brand.builder()
+                                .imported(this.brand.getImported())
+                                .name(this.brand.getName())
+                                .build())
                 .model(this.model)
                 .name(this.name)
                 .board(this.board)

@@ -1,13 +1,13 @@
 package com.unifacef.work.groupone.microservicereserve.domains;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 
-@AllArgsConstructor
-public enum Classification {
-    SUV("suv"),
-    COMPACTO("compacto"),
-    LUXO("luxo");
-
-    private String description;
+@Data
+@Builder
+public class Classification {
+    private String code;
+    private String name;
+    private Double price;
 
 }
