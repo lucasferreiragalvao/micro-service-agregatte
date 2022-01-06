@@ -26,13 +26,16 @@ public class PatchStatusFinishedReserve {
                 .orElseThrow(() -> new NotFoundException(messageUtils.getMessage(MessageKey.RESERVE_NOT_FOUND,reserve.getCode())));
         validate(oldReserve);
         oldReserve.setStatus(reserve.getStatus());
+
+        oldReserve.setTankStatusFinal(reserve.getTankStatusFinal());
+
         if(reserve.getFinalOdomenter() != null){
             validateFinalOdometerGreaterThanStartOdometer(reserve.getFinalOdomenter(),oldReserve.getStartOdomenter());
             oldReserve.setFinalOdomenter(reserve.getFinalOdomenter());
         }
-        Reserve reserveSaved= reserveDataGateway.save(oldReserve);
+        Reserve reserveSaved = reserveDataGateway.save(oldReserve);
         queuePublishMessageGateway.execute(
-                ConvertMessage.convertMessageCar(reserveSaved.getCar().getCode(),reserveSaved.getFinalOdomenter())
+                ConvertMessage.convertMessageCar(reserveSaved.getCar().getCode(),reserveSaved.getFinalOdomenter(), reserveSaved.getTankStatusFinal())
         );
         return reserveSaved;
     }
@@ -41,7 +44,7 @@ public class PatchStatusFinishedReserve {
     }
 
     private void validStatus(Reserve reserve){
-        if(reserve.getStatus().equals(Status.FINISHED)){
+        if(reserve.getStatus().equals(Status.FINISHED.getDescription())){
             throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.RESERVE_IS_ALREADY_FINISHED,reserve.getCode()));
         }
     }
@@ -50,6 +53,10 @@ public class PatchStatusFinishedReserve {
         if(finalOdomenter < startOdomenter){
             throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.RESERVE_FINAL_ODOMETER_LESS_THAN_START_ODOMETER,startOdomenter));
         }
+    }
+
+    private void validTankStatus(Reserve reserve) {
+
     }
 
 }

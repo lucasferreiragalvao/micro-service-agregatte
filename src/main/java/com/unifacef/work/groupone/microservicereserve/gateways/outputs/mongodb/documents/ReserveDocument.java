@@ -21,7 +21,9 @@ public class ReserveDocument {
     private LocalDateTime finalDate;
     private Long startOdomenter;
     private Long finalOdomenter;
-    private Status status;
+    private String status;
+    private String tankStatusStart;
+    private String tankStatusFinal;
     private LocalDateTime createdAt;
     @LastModifiedDate
     private LocalDateTime lastModifiedDate;
@@ -35,6 +37,8 @@ public class ReserveDocument {
         this.status = reserve.getStatus();
         this.startOdomenter = reserve.getStartOdomenter();
         this.finalOdomenter = reserve.getFinalOdomenter();
+        this.tankStatusStart = reserve.getTankStatusStart();
+        this.tankStatusFinal = reserve.getTankStatusFinal();
         this.createdAt = reserve.getCreatedDate();
         this.lastModifiedDate = reserve.getLastModifiedDate();
     }
@@ -48,6 +52,8 @@ public class ReserveDocument {
                 .finalDate(this.finalDate)
                 .startOdomenter(this.startOdomenter)
                 .finalOdomenter(this.finalOdomenter)
+                .tankStatusStart(this.tankStatusStart)
+                .tankStatusFinal(this.tankStatusFinal)
                 .status(this.status)
                 .build();
     }

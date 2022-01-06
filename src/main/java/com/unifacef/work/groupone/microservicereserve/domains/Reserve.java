@@ -13,9 +13,11 @@ public class Reserve {
     private Car car;
     private LocalDateTime startDate;
     private LocalDateTime finalDate;
-    private Status status;
+    private String status;
     private Long startOdomenter;
     private Long finalOdomenter;
+    private String tankStatusStart;
+    private String tankStatusFinal;
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
 }

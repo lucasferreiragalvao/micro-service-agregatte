@@ -30,7 +30,7 @@ public class CreateReserve {
         car.setOdomenter(null);
         reserve.setCustomer(customer);
         reserve.setCar(car);
-        reserve.setStatus(Status.PENDING);
+        reserve.setStatus(Status.PENDING.getDescription());
         log.info("Create reserve");
         Reserve saved = reserveDataGateway.save(reserve);
         return saved;

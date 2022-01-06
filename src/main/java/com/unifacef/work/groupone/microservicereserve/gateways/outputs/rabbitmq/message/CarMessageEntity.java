@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class CarMessageEntity {
     private String code;
     private Long odomenter;
-
+    private String tankStatus;
 }
