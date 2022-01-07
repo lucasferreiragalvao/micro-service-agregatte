@@ -5,6 +5,8 @@ import com.unifacef.work.groupone.microservicereserve.gateways.outputs.ReserveDa
 import com.unifacef.work.groupone.microservicereserve.gateways.outputs.mongodb.documents.ReserveDocument;
 import com.unifacef.work.groupone.microservicereserve.gateways.outputs.mongodb.repositories.ReserveRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -28,5 +30,10 @@ public class ReserveDataGatewayMongoImpl implements ReserveDataGateway {
     @Override
     public Optional<Reserve> findByCode(String code) {
         return reserveRepository.findById(code).map(ReserveDocument::toDomain);
+    }
+
+    @Override
+    public Page<Reserve> findByPage(final Pageable pageable) {
+        return reserveRepository.findAll(pageable).map(ReserveDocument::toDomain);
     }
 }
