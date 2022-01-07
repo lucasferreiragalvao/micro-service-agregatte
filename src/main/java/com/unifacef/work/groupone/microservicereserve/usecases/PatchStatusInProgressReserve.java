@@ -6,6 +6,7 @@ import com.unifacef.work.groupone.microservicereserve.domains.Reserve;
 import com.unifacef.work.groupone.microservicereserve.domains.Status;
 import com.unifacef.work.groupone.microservicereserve.exceptions.MessageKey;
 import com.unifacef.work.groupone.microservicereserve.exceptions.NotFoundException;
+import com.unifacef.work.groupone.microservicereserve.gateways.inputs.http.requests.TankStatusReserveRequest;
 import com.unifacef.work.groupone.microservicereserve.gateways.outputs.CarGateway;
 import com.unifacef.work.groupone.microservicereserve.gateways.outputs.EmployeeGateway;
 import com.unifacef.work.groupone.microservicereserve.gateways.outputs.ReserveDataGateway;
@@ -34,8 +35,9 @@ public class PatchStatusInProgressReserve {
         Employee employee = employeeGateway.findByCode(reserve.getEmployee().getCode()).toDomain();
         oldReserve.setEmployee(employee);
         oldReserve.setStartOdomenter(car.getOdomenter());
-        oldReserve.setStatus(Status.IN_PROGRESS);
-        log.info("Patch reserve : {}", reserve.getCode());
+        oldReserve.setStatus(Status.IN_PROGRESS.getDescription());
+        oldReserve.setTankStatusStart(TankStatusReserveRequest.FULL.getDescription());
+        log.info("Patch reserve : {}", code);
         return reserveDataGateway.save(oldReserve);
     }
 
@@ -44,10 +46,10 @@ public class PatchStatusInProgressReserve {
     }
 
     private void validStatus(Reserve reserve){
-        if(reserve.getStatus().equals(Status.IN_PROGRESS)){
+        if(reserve.getStatus().equals(Status.IN_PROGRESS.getDescription())){
             throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.RESERVE_IS_ALREADY_IN_PROGRESS,reserve.getCode()));
         }
-        if(reserve.getStatus().equals(Status.FINISHED)){
+        if(reserve.getStatus().equals(Status.FINISHED.getDescription())){
             throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.RESERVE_IS_ALREADY_FINISHED,reserve.getCode()));
         }
     }

@@ -5,6 +5,7 @@ import com.unifacef.work.groupone.microservicereserve.domains.Status;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
@@ -15,13 +16,15 @@ public class PatchFinishedReserveRequest implements Serializable {
     private Long finalOdomenter;
 
     @ApiModelProperty(position = 2)
-    private TankStatusReserveRequest tankStatus;
+    @NotNull(message = "{required.field}")
+    private TankStatusReserveRequest tankStatusFinal;
 
     public Reserve toDomain(final String code){
         return Reserve.builder()
                 .code(code)
-                .status(Status.FINISHED)
+                .status(Status.FINISHED.getDescription())
                 .finalOdomenter(this.finalOdomenter)
+                .tankStatusFinal(this.tankStatusFinal.getDescription())
                 .build();
     }
 }

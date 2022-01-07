@@ -32,7 +32,13 @@ public class ReserveResponse implements Serializable {
     private LocalDateTime finalDate;
 
     @ApiModelProperty(position = 5)
-    private Status status;
+    private String status;
+
+    @ApiModelProperty(position = 6)
+    private String tankStatusStart;
+
+    @ApiModelProperty(position = 7)
+    private String tankStatusFinal;
 
     public ReserveResponse(final Reserve reserve) {
         this.code = reserve.getCode();
@@ -41,6 +47,8 @@ public class ReserveResponse implements Serializable {
         this.employee = Objects.isNull(reserve.getEmployee()) ? null : new EmployeeResponse(reserve.getEmployee());
         this.startDate = reserve.getStartDate();
         this.finalDate = reserve.getFinalDate();
+        this.tankStatusStart = "FULL";
+        this.tankStatusFinal = reserve.getTankStatusFinal();
         this.status = reserve.getStatus();
     }
 }

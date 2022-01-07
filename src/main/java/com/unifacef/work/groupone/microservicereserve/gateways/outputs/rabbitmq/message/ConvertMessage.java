@@ -9,9 +9,9 @@ import java.nio.charset.StandardCharsets;
 
 public class ConvertMessage {
 
-    public static Message convertMessageCar(String code, Long finalOdomenter){
+    public static Message convertMessageCar(String code, Long finalOdomenter, String tankStatus){
         return new Message(
-                new Gson().toJson(new CarMessageEntity(code,finalOdomenter)).getBytes(StandardCharsets.UTF_8),
+                new Gson().toJson(new CarMessageEntity(code, finalOdomenter, tankStatus)).getBytes(StandardCharsets.UTF_8),
                 new MessageProperties()
         );
     }
