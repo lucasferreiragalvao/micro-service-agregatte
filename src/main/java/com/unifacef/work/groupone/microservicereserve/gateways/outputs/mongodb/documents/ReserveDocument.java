@@ -8,6 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Data
 @NoArgsConstructor
@@ -17,6 +18,7 @@ public class ReserveDocument {
     private String id;
     private CustomerDocument customer;
     private CarDocument car;
+    private EmployeeDocument employee;
     private LocalDateTime startDate;
     private LocalDateTime finalDate;
     private Long startOdomenter;
@@ -32,6 +34,7 @@ public class ReserveDocument {
         this.id = reserve.getCode();
         this.customer = new CustomerDocument(reserve.getCustomer());
         this.car = new CarDocument(reserve.getCar());
+        this.employee = Objects.isNull(reserve.getEmployee()) ? null : new EmployeeDocument(reserve.getEmployee());
         this.startDate = reserve.getStartDate();
         this.finalDate = reserve.getFinalDate();
         this.status = reserve.getStatus();
@@ -48,6 +51,7 @@ public class ReserveDocument {
                 .code(this.id)
                 .customer(this.customer.toDomain())
                 .car(this.car.toDomain())
+                .employee(Objects.isNull(this.employee) ? null: this.employee.toDomain())
                 .startDate(this.startDate)
                 .finalDate(this.finalDate)
                 .startOdomenter(this.startOdomenter)

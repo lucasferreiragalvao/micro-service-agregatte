@@ -16,6 +16,7 @@ public class Reserve {
     private String status;
     private Long startOdomenter;
     private Long finalOdomenter;
+    private Employee employee;
     private String tankStatusStart;
     private String tankStatusFinal;
     private LocalDateTime createdDate;
