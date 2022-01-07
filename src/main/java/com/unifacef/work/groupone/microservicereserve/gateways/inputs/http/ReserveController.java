@@ -2,6 +2,7 @@ package com.unifacef.work.groupone.microservicereserve.gateways.inputs.http;
 
 import com.unifacef.work.groupone.microservicereserve.gateways.inputs.http.requests.CreateReserveRequest;
 import com.unifacef.work.groupone.microservicereserve.gateways.inputs.http.requests.PatchFinishedReserveRequest;
+import com.unifacef.work.groupone.microservicereserve.gateways.inputs.http.requests.PatchInProgressReserveRequest;
 import com.unifacef.work.groupone.microservicereserve.gateways.inputs.http.responses.ReserveResponse;
 import com.unifacef.work.groupone.microservicereserve.usecases.CreateReserve;
 import com.unifacef.work.groupone.microservicereserve.usecases.PatchStatusFinishedReserve;
@@ -37,8 +38,8 @@ public class ReserveController {
     }
 
     @PatchMapping(path = "/{code}/status/in-progress")
-    public ReserveResponse patchStatusInProgress(@PathVariable final String code){
-        return new ReserveResponse(patchStatusInProgressReserve.execute(code));
+    public ReserveResponse patchStatusInProgress(@PathVariable final String code,@RequestBody @Validated final PatchInProgressReserveRequest request){
+        return new ReserveResponse(patchStatusInProgressReserve.execute(request.toDomain(code)));
     }
 
 }

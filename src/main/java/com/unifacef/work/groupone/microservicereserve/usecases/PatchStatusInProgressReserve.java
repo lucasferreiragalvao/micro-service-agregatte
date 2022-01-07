@@ -1,11 +1,13 @@
 package com.unifacef.work.groupone.microservicereserve.usecases;
 
 import com.unifacef.work.groupone.microservicereserve.domains.Car;
+import com.unifacef.work.groupone.microservicereserve.domains.Employee;
 import com.unifacef.work.groupone.microservicereserve.domains.Reserve;
 import com.unifacef.work.groupone.microservicereserve.domains.Status;
 import com.unifacef.work.groupone.microservicereserve.exceptions.MessageKey;
 import com.unifacef.work.groupone.microservicereserve.exceptions.NotFoundException;
 import com.unifacef.work.groupone.microservicereserve.gateways.outputs.CarGateway;
+import com.unifacef.work.groupone.microservicereserve.gateways.outputs.EmployeeGateway;
 import com.unifacef.work.groupone.microservicereserve.gateways.outputs.ReserveDataGateway;
 import com.unifacef.work.groupone.microservicereserve.utils.MessageUtils;
 import lombok.RequiredArgsConstructor;
@@ -20,17 +22,20 @@ public class PatchStatusInProgressReserve {
     private final ReserveDataGateway reserveDataGateway;
     private final MessageUtils messageUtils;
     private final CarGateway carGateway;
+    private final EmployeeGateway employeeGateway;
 
 
-    public Reserve execute(final String code){
-        log.info("In Progress reserve : {}", code);
-        Reserve oldReserve = reserveDataGateway.findByCode(code)
-                .orElseThrow(() -> new NotFoundException(messageUtils.getMessage(MessageKey.RESERVE_NOT_FOUND,code)));
+    public Reserve execute(final Reserve reserve){
+        log.info("In Progress reserve : {}", reserve.getCode());
+        Reserve oldReserve = reserveDataGateway.findByCode(reserve.getCode())
+                .orElseThrow(() -> new NotFoundException(messageUtils.getMessage(MessageKey.RESERVE_NOT_FOUND,reserve.getCode())));
         validate(oldReserve);
         Car car = carGateway.findByCode(oldReserve.getCar().getCode()).toDomain();
+        Employee employee = employeeGateway.findByCode(reserve.getEmployee().getCode()).toDomain();
+        oldReserve.setEmployee(employee);
         oldReserve.setStartOdomenter(car.getOdomenter());
         oldReserve.setStatus(Status.IN_PROGRESS);
-        log.info("Patch reserve : {}", code);
+        log.info("Patch reserve : {}", reserve.getCode());
         return reserveDataGateway.save(oldReserve);
     }
 

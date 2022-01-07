@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Data
 public class ReserveResponse implements Serializable {
@@ -22,6 +23,9 @@ public class ReserveResponse implements Serializable {
     private CarResponse car;
 
     @ApiModelProperty(position = 3)
+    private EmployeeResponse employee;
+
+    @ApiModelProperty(position = 3)
     private LocalDateTime startDate;
 
     @ApiModelProperty(position = 4)
@@ -34,6 +38,7 @@ public class ReserveResponse implements Serializable {
         this.code = reserve.getCode();
         this.customer = new CustomerResponse(reserve.getCustomer());
         this.car = new CarResponse(reserve.getCar());
+        this.employee = Objects.isNull(reserve.getEmployee()) ? null : new EmployeeResponse(reserve.getEmployee());
         this.startDate = reserve.getStartDate();
         this.finalDate = reserve.getFinalDate();
         this.status = reserve.getStatus();

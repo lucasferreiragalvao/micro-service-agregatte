@@ -1,13 +1,9 @@
 package com.unifacef.work.groupone.microservicereserve.gateways.outputs.mongodb.documents;
 
-import com.unifacef.work.groupone.microservicereserve.domains.Brand;
 import com.unifacef.work.groupone.microservicereserve.domains.Car;
-import com.unifacef.work.groupone.microservicereserve.domains.Classification;
-import com.unifacef.work.groupone.microservicereserve.domains.Customer;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor

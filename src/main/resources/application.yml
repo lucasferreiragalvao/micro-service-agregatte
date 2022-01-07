@@ -23,3 +23,5 @@ integration:
     url: http://localhost:8080
   customer:
     url: http://localhost:8082
+  employee:
+    url: http://localhost:8083
