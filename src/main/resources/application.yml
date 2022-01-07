@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8083
 application:
   rabbitmq:
     queue:
@@ -11,7 +11,7 @@ application:
 spring:
   data:
     mongodb:
-      uri: mongodb://root:1234@localhost:27021/reserves-api
+      uri: mongodb://localhost:27033/reserves-api
   rabbitmq:
     host: localhost
     port: 5672
@@ -22,6 +22,6 @@ integration:
   car:
     url: http://localhost:8080
   customer:
-    url: http://localhost:8082
+    url: http://localhost:8081
   employee:
-    url: http://localhost:8083
+    url: http://localhost:8082
