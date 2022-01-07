@@ -9,7 +9,9 @@ import com.unifacef.work.groupone.microservicereserve.exceptions.NotFoundExcepti
 import com.unifacef.work.groupone.microservicereserve.gateways.inputs.http.requests.TankStatusReserveRequest;
 import com.unifacef.work.groupone.microservicereserve.gateways.outputs.CarGateway;
 import com.unifacef.work.groupone.microservicereserve.gateways.outputs.EmployeeGateway;
+import com.unifacef.work.groupone.microservicereserve.gateways.outputs.QueuePublishMessageGateway;
 import com.unifacef.work.groupone.microservicereserve.gateways.outputs.ReserveDataGateway;
+import com.unifacef.work.groupone.microservicereserve.gateways.outputs.rabbitmq.message.ConvertMessage;
 import com.unifacef.work.groupone.microservicereserve.utils.MessageUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,7 @@ public class PatchStatusInProgressReserve {
     private final MessageUtils messageUtils;
     private final CarGateway carGateway;
     private final EmployeeGateway employeeGateway;
+    private final QueuePublishMessageGateway queuePublishMessageGateway;
 
 
     public Reserve execute(final Reserve reserve){
@@ -39,7 +42,11 @@ public class PatchStatusInProgressReserve {
         oldReserve.setStatus(Status.IN_PROGRESS.getDescription());
         oldReserve.setTankStatusStart(TankStatusReserveRequest.FULL.getDescription());
         log.info("Patch reserve : {}", reserve.getCode());
-        return reserveDataGateway.save(oldReserve);
+        Reserve reserveSaved = reserveDataGateway.save(oldReserve);
+        queuePublishMessageGateway.execute(
+                ConvertMessage.convertMessageCar(reserveSaved.getCar().getCode(),reserveSaved.getStartOdomenter(), reserveSaved.getTankStatusStart())
+        );
+        return reserveSaved;
     }
 
     private void validate(Reserve reserve){
@@ -56,7 +63,7 @@ public class PatchStatusInProgressReserve {
     }
 
     private void validStatusEmployee(Employee employee){
-        if(!employee.getStatus().equals("WORKING") || !employee.getStatus().equals("TRIAL")){
+        if(!employee.getStatus().equals("WORKING") && !employee.getStatus().equals("TRIAL")){
             throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.EMPLOYEE_NOT_CAN_EXECUTE_RENTAL,employee.getCode()));
         }
     }
