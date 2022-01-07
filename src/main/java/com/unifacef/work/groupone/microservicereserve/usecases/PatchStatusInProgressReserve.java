@@ -33,11 +33,12 @@ public class PatchStatusInProgressReserve {
         validate(oldReserve);
         Car car = carGateway.findByCode(oldReserve.getCar().getCode()).toDomain();
         Employee employee = employeeGateway.findByCode(reserve.getEmployee().getCode()).toDomain();
+        validStatusEmployee(employee);
         oldReserve.setEmployee(employee);
         oldReserve.setStartOdomenter(car.getOdomenter());
         oldReserve.setStatus(Status.IN_PROGRESS.getDescription());
         oldReserve.setTankStatusStart(TankStatusReserveRequest.FULL.getDescription());
-        log.info("Patch reserve : {}", code);
+        log.info("Patch reserve : {}", reserve.getCode());
         return reserveDataGateway.save(oldReserve);
     }
 
@@ -51,6 +52,12 @@ public class PatchStatusInProgressReserve {
         }
         if(reserve.getStatus().equals(Status.FINISHED.getDescription())){
             throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.RESERVE_IS_ALREADY_FINISHED,reserve.getCode()));
+        }
+    }
+
+    private void validStatusEmployee(Employee employee){
+        if(!employee.getStatus().equals("WORKING") || !employee.getStatus().equals("TRIAL")){
+            throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.EMPLOYEE_NOT_CAN_EXECUTE_RENTAL,employee.getCode()));
         }
     }
 }

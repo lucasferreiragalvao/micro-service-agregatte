@@ -10,7 +10,8 @@ public enum MessageKey {
     CAR_ALREADY_RENTED("car.already.rented"),
     RESERVE_FINAL_ODOMETER_LESS_THAN_START_ODOMETER("reserve.final.odometer.less.than.start.odometer"),
     RESERVE_IS_ALREADY_IN_PROGRESS("reserve.is.already.in.progress"),
-    RESERVE_IS_ALREADY_FINISHED("reserve.is.already.finished");
+    RESERVE_IS_ALREADY_FINISHED("reserve.is.already.finished"),
+    EMPLOYEE_NOT_CAN_EXECUTE_RENTAL("employee.not.can.execute.rental");
 
     private String key;
 }
