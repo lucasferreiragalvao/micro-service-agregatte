@@ -44,6 +44,9 @@ public class PatchStatusFinishedReserve {
     }
 
     private void validStatus(Reserve reserve){
+        if(reserve.getStatus().equals(Status.PENDING.getDescription())){
+            throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.RESERVE_NOT_FINISHED_BECAUSE_STATUS_IN_PROGRESS,reserve.getCode()));
+        }
         if(reserve.getStatus().equals(Status.FINISHED.getDescription())){
             throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.RESERVE_IS_ALREADY_FINISHED,reserve.getCode()));
         }
