@@ -1,21 +1,19 @@
 package com.unifacef.work.groupone.microservicereserve.gateways.inputs.http;
 
+import com.unifacef.work.groupone.microservicereserve.domains.Reserve;
 import com.unifacef.work.groupone.microservicereserve.gateways.inputs.http.requests.CreateReserveRequest;
 import com.unifacef.work.groupone.microservicereserve.gateways.inputs.http.requests.PatchFinishedReserveRequest;
 import com.unifacef.work.groupone.microservicereserve.gateways.inputs.http.requests.PatchInProgressReserveRequest;
+import com.unifacef.work.groupone.microservicereserve.gateways.inputs.http.responses.ListResponse;
 import com.unifacef.work.groupone.microservicereserve.gateways.inputs.http.responses.ReserveResponse;
-import com.unifacef.work.groupone.microservicereserve.usecases.CreateReserve;
-import com.unifacef.work.groupone.microservicereserve.usecases.PatchStatusFinishedReserve;
-import com.unifacef.work.groupone.microservicereserve.usecases.PatchStatusInProgressReserve;
+import com.unifacef.work.groupone.microservicereserve.usecases.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+
 @Slf4j
 @Validated
 @RestController
@@ -26,6 +24,8 @@ public class ReserveController {
     private final CreateReserve createReserve;
     private final PatchStatusFinishedReserve patchStatusFinishedReserve;
     private final PatchStatusInProgressReserve patchStatusInProgressReserve;
+    private final FindByReserveCode findByReserveCode;
+    private final FindReserve findReserves;
 
     @PostMapping
     public ReserveResponse create(@RequestBody @Validated final CreateReserveRequest request){
@@ -42,4 +42,17 @@ public class ReserveController {
         return new ReserveResponse(patchStatusInProgressReserve.execute(request.toDomain(code)));
     }
 
+    @GetMapping(path = "/{code}")
+    public ReserveResponse find(@PathVariable final String code) {
+        Reserve reserve = findByReserveCode.execute(code);
+        return new ReserveResponse(reserve);
+    }
+
+    @GetMapping
+    public ListResponse<ReserveResponse> findByPage(@RequestParam(defaultValue = "0") final Integer page,
+                                                    @RequestParam(defaultValue = "20") final Integer size) {
+        Page<ReserveResponse> reservePage =
+                findReserves.execute(PageRequest.of(page, size)).map(ReserveResponse::new);
+        return new ListResponse<>(reservePage);
+    }
 }
