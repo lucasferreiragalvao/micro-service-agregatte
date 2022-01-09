@@ -18,6 +18,7 @@
 		<springfox-swagger2.version>2.9.2</springfox-swagger2.version>
 		<spring-cloud.version>2020.0.4</spring-cloud.version>
 		<jackson.version>2.13.0</jackson.version>
+		<commons-lang3.version>3.11</commons-lang3.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -89,6 +90,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
 		</dependency>
 	</dependencies>
 

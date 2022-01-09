@@ -12,7 +12,9 @@ public enum MessageKey {
     RESERVE_IS_ALREADY_IN_PROGRESS("reserve.is.already.in.progress"),
     RESERVE_IS_ALREADY_FINISHED("reserve.is.already.finished"),
     RESERVE_NOT_FINISHED_BECAUSE_STATUS_IN_PROGRESS("reserve.not.finished.because.status.in.progress"),
-    EMPLOYEE_NOT_CAN_EXECUTE_RENTAL("employee.not.can.execute.rental");
+    EMPLOYEE_NOT_CAN_EXECUTE_RENTAL("employee.not.can.execute.rental"),
+    BOOKING_EARLIER_THAN_ALLOWED("booking.earlier.than.allowed"),
+    BOOK_AFTER_ALLOWED("book.after.allowed");
 
     private String key;
 }
