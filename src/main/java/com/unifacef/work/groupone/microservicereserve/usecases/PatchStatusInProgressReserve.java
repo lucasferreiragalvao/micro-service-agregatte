@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -51,6 +53,7 @@ public class PatchStatusInProgressReserve {
 
     private void validate(Reserve reserve){
         validStatus(reserve);
+        validDateToSetInProgress(reserve);
     }
 
     private void validStatus(Reserve reserve){
@@ -65,6 +68,16 @@ public class PatchStatusInProgressReserve {
     private void validStatusEmployee(Employee employee){
         if(!employee.getStatus().equals("WORKING") && !employee.getStatus().equals("TRIAL")){
             throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.EMPLOYEE_NOT_CAN_EXECUTE_RENTAL,employee.getCode()));
+        }
+    }
+    
+    private void validDateToSetInProgress(Reserve reserve) {
+        if(reserve.getStartDate().isAfter(LocalDateTime.now())) {
+            throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.BOOKING_EARLIER_THAN_ALLOWED,reserve.getCode()));
+        }
+
+        if(reserve.getFinalDate().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.BOOK_AFTER_ALLOWED,reserve.getCode()));
         }
     }
 }
