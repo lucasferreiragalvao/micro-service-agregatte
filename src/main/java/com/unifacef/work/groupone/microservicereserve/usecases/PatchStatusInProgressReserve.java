@@ -73,11 +73,11 @@ public class PatchStatusInProgressReserve {
     
     private void validDateToSetInProgress(Reserve reserve) {
         if(reserve.getStartDate().isAfter(LocalDateTime.now())) {
-            throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.BOOKING_EARLIER_THAN_ALLOWED,reserve.getCode()));
+            throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.RESERVE_EARLIER_THAN_ALLOWED,reserve.getCode()));
         }
 
         if(reserve.getFinalDate().isBefore(LocalDateTime.now())) {
-            throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.BOOK_AFTER_ALLOWED,reserve.getCode()));
+            throw new IllegalArgumentException(messageUtils.getMessage(MessageKey.RESERVE_AFTER_ALLOWED,reserve.getCode()));
         }
     }
 }
